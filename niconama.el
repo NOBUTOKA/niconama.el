@@ -18,7 +18,7 @@
 ;; If not, see <http://www.gnu.org/licenses/>.
 
 ;; Created: 18 June 2016
-;; Version: 0.1
+;; Version: 1.0
 ;; Package-Version: 20160625.718
 ;; URL: https://github.com/NOBUTOKA/niconama.el
 
@@ -297,7 +297,7 @@ MLIST: list to be applied"
 (defun niconama-submit-comment ()
   "Submit comment to broadcast."
   (interactive)
-  (let (vpos postkey is184)
+  (let (vpos postkey mail)
     (setq vpos (* (- (+ (* (car (current-time)) (expt 2 16)) (cadr (current-time))) niconama--broadcast-open-time) 100))
     (request "http://live.nicovideo.jp/api/getpostkey"
 	     :type "GET"
@@ -308,9 +308,9 @@ MLIST: list to be applied"
 				     (setq postkey (cadr (split-string (request-response-data response) "postkey="))))
 				   ))
     (if niconama--comment-is184
-	(setq is184 1)
-      (setq is184 0))
-    (process-send-string niconama--comment-viewer-process (format "<chat thread=\"%s\" vpos=\"%s\" mail=\"\" user_id=\"%s\" ticket=\"%s\" postkey=\"%s\" premium=\"0\" anonymity=\"%s\">%s</chat>\0" niconama--broadcast-thread vpos niconama--user-id niconama--broadcast-ticket postkey is184 (buffer-string)))
+	(setq mail "184")
+      (setq mail ""))
+    (process-send-string niconama--comment-viewer-process (format "<chat thread=\"%s\" vpos=\"%s\" mail=\"%s\" user_id=\"%s\" ticket=\"%s\" postkey=\"%s\" premium=\"0\">%s</chat>\0" niconama--broadcast-thread vpos mail niconama--user-id niconama--broadcast-ticket postkey (buffer-string)))
     (erase-buffer)
     )
   )
