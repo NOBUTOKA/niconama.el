@@ -240,9 +240,9 @@ MLIST: list to be applied"
 									  niconama--kotehan-list))))
 					     (cond (username (progn
 							       (goto-char (point-min))
-							       (while (re-search-forward commentuserid nil t))
-							       (replace-match username))
-							     (goto-char (point-max)))
+							       (while (re-search-forward (format "%s" commentuserid) nil t)
+								 (replace-match (format "%s" username)))
+							       (goto-char (point-max))))
 						   ((string-match "[@\uff20]" (cl-caddr comment))
 						    (niconama--add-kotehan-to-list (cons commentuserid (setq username (cdr (split-string (cl-caddr comment) "[@\uff20]"))))))
 						   ((> (string-to-number commentuserid) 10000)
