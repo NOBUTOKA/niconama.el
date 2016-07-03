@@ -31,7 +31,6 @@
 ;; To use, require this script and configure your Niconico account like this.
 
 ;; (setq niconama-user "your@account.com")
-;; (setq niconama-pass "yourpassword")
 
 ;; And then, type M-x niconama-comment-viewer to activate comment viewer.
 ;; C-RET in "Write Comment" buffer submit the contents of this buffer to broadcast.
@@ -153,6 +152,10 @@ MLIST: list to be applied"
 	niconama--broadcast-port
 	niconama--broadcast-title
 	)
+
+    (when (null niconama-pass)
+      (setq niconama-pass (read-passwd (concat "Password of Niconico account " niconama-user ":"))))
+    
     (request niconama--loginURL
 	     :type "POST"
 	     :params '(("site"."nicolive"))
