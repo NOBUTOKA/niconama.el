@@ -143,6 +143,7 @@ MLIST: list to be applied"
 (defvar niconama--kotehan-list nil)
 (load (concat user-emacs-directory "kotehan.el") t)
 
+;;;###autoload
 (defun niconama-comment-viewer (broadcastNum)
   "Activate Niconama Comment Viewer connected to BROADCASTNUM."
   (interactive "MBroadcast Number with \"lv\": ")
@@ -296,7 +297,7 @@ MLIST: list to be applied"
     )
   )
 
-
+;;;###autoload
 (defun niconama-submit-comment ()
   "Submit comment to broadcast."
   (interactive)
@@ -318,6 +319,7 @@ MLIST: list to be applied"
     )
   )
 
+;;;###autoload
 (defun niconama-switch-is184 ()
   "Switch whether submitting comment as 184 or not."
   (interactive)
@@ -327,6 +329,7 @@ MLIST: list to be applied"
     (message "184 disabled."))
   )
 
+;;;###autoload
 (defun niconama-kill-comment-viewer (processnum)
   "Kill comment-viewer process of PROCESSNUM."
   (interactive (list (read-number "Process Number: " 0)))
