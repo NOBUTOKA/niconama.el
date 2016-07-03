@@ -141,13 +141,13 @@ MLIST: list to be applied"
 (defvar niconama-submitter-map (make-keymap))
 
 (defvar niconama--kotehan-list nil)
-(load "~/.emacs.d/kotehan.el" t)
+(load (concat user-emacs-directory "kotehan.el") t)
 
 (defun niconama-comment-viewer (broadcastNum)
   "Activate Niconama Comment Viewer connected to BROADCASTNUM."
   (interactive "MBroadcast Number with \"lv\": ")
   (let (niconama--root
-	(niconama--status nil)
+	(niconama--status nil)n
 	niconama--broadcast-addr
 	niconama--broadcast-port
 	niconama--broadcast-title
@@ -349,7 +349,7 @@ MLIST: list to be applied"
   "Save Hundlename list."
   (with-temp-buffer
     (insert (format "(setq niconama--kotehan-list '%s)" niconama--kotehan-list))
-    (write-file "~/.emacs.d/kotehan.el")))
+    (write-file (concat user-emacs-directory "kotehan.el"))))
 
 (defun niconama--get-nickname-from-userid ()
   "Get Niconico nickname from userid."
