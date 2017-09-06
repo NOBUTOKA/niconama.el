@@ -35,8 +35,7 @@
 ;; C-RET in "Write Comment" buffer submit the contents of this buffer to broadcast.
 
 ;; To kill the comment viewer, use M-x niconama-kill-comment-viewer and type process number
-;; shown in comment viewer buffer name as "niconama-comment-viewer" (process number is 0) or
-;; "niconama-comment-viewer <n>" (process number is n).
+;; shown in comment viewer buffer name as <process number>: <broadcast title>.
 
 ;;; Code:
 
@@ -174,7 +173,7 @@
 		(niconama--replace-broadcast-info
 		 niconama--comment-viewer-buffer-name
 		 niconama--next-comment-viewer-number
-		 (concat niconama--broadcast-title " 00:00")))
+		 (concat (number-to-string niconama--next-comment-viewer-number) ": "  niconama--broadcast-title)))
 	  (switch-to-buffer (niconama--find-broadcast-info niconama--comment-viewer-buffer-name
 							   niconama--next-comment-viewer-number))
 	  (erase-buffer)
@@ -230,7 +229,7 @@
 	(setq vpos (* (- (+ (* (car (current-time)) (expt 2 16)) (cadr (current-time))) open-time) 100))
 	(request "http://live.nicovideo.jp/api/getpostkey"
 		 :type "GET"
-		 :params (list (cons "thread" thread) (cons "block_no" (/ (+ last-comment-number 1) 100)))
+		 :params (list (cons "thread" (number-to-string thread)) (cons "block_no" (number-to-string (/ (+ last-comment-number 1) 100))))
 		 :parser 'buffer-string
 		 :sync t
 		 :success (cl-function (lambda (&key response &allow-other-keys)
@@ -470,7 +469,7 @@ If (NUM.someinfo) is exist in the list, replace this."
 				   (let ((data (request-response-data response)) nickname)
 				     (string-match "<title>\\(.*\\)\u3055\u3093" (decode-coding-string data 'utf-8-unix))
 				     (setq nickname (match-string 1 (decode-coding-string data 'utf-8-unix)))
-				     (niconama--add-kotehan-to-list (cons niconama--comment-userid nickname))
+				     (niconama--add-kotehan-to-list (cons (first (last(split-string (request-response-url response) "/"))) nickname))
 				     )))
 	   :error (cl-function (lambda (&key response &allow-other-keys)
 				 (message "%s" (request-response-status-code response))))
