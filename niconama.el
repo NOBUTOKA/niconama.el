@@ -22,7 +22,7 @@
 ;; URL: https://github.com/NOBUTOKA/niconama.el
 
 ;; Keywords: comm
-;; Package-Requires: ((emacs "24") (request "0.2.0") (cl-lib "0.5"))
+;; Package-Requires: ((emacs "24") (request "20170131.1747") (cl-lib "0.5"))
 
 ;;; Commentary:
 
