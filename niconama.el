@@ -18,7 +18,7 @@
 ;; If not, see <http://www.gnu.org/licenses/>.
 
 ;; Created: 18 June 2016
-;; Version: 2.0
+;; Version: 2.1
 ;; URL: https://github.com/NOBUTOKA/niconama.el
 
 ;; Keywords: comm
