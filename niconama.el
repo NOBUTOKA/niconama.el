@@ -412,16 +412,17 @@ If (NUM.someinfo) is exist in the list, replace this."
 			   (niconama--add-kotehan-to-list
 			    (cons commentuserid (setq username (cdr (split-string (cl-caddr comment) "[@\uff20]"))))
 			    ))
+			  (username (goto-char (point-min))
+				    (while (re-search-forward (format "%s" commentuserid) nil t)
+				      (replace-match (format "%s" username)))
+				    (goto-char (point-max))
+				    )
 			  ((> (string-to-number commentuserid) 10000)
 			   (progn
 			     (setq niconama--comment-userid (string-to-number commentuserid))
 			     (niconama--get-nickname-from-userid)
 			     (setq username commentuserid)))
-			  (t (setq username commentuserid)))
-		    (goto-char (point-min))
-		    (while (re-search-forward (format "%s" commentuserid) nil t)
-		      (replace-match (format "%s" username)))
-		    (goto-char (point-max))
+			  ((not username) (setq username commentuserid)))
 		    (insert (format "%d\t%02d:%02d\t%s\t%s\n"
 				    (niconama--find-broadcast-info
 				     (setq niconama--comment-last-comment-number
